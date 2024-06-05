@@ -1,7 +1,5 @@
 ---
 - hosts: localhost
-  connection: local
-  gather_facts: False
   vars:
     people:
     - name: Mike
@@ -31,6 +29,7 @@
 
   tasks:
     - name: FIND PEOPLE
-      debug: msg="Yay it's {{ item.name }} from {{ item.office}} and. Status is {{ "ready" if item.status.ready else "not ready" }}"
-      with_items: "{{ people }}"
+      ansible.builtin.debug:
+        msg: "Yay it's {{ item.name }} from {{ item.office}} and. Status is {{ 'ready' if item.status.ready else 'not ready' }}"
+      loop: "{{ people }}"
       when: item.epic

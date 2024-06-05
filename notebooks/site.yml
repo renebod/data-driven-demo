@@ -3,7 +3,6 @@
 
 - name: Ansible Example Playbook
   hosts: localhost
-  remote_user: root
 
   roles:
     - demo

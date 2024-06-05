@@ -1,10 +1,4 @@
 ---
-- name: SHOW DICTIONARY
-  debug:
-    msg: "DICT LOOKUP: {{ lookup('dict', bla) }}"
-  tags: test_01
-
-
 - name: GET FROM COUCHDB
   ansible.builtin.uri:
     url: http://couchdb:5984/mydb/_all_docs
@@ -17,7 +11,7 @@
 
 
 - name: SHOW DATA DRIVEN OBJECTS
-  debug:
+  ansible.builtin.debug:
     var: couchdb_results
   tags: test_02
 
@@ -34,7 +28,7 @@
 
 
 - name: SHOW DATA DRIVEN OBJECTS
-  debug:
+  ansible.builtin.debug:
     msg: "{{ item.doc }}"
   loop: "{{ couchdb_results.json.rows }}"
   loop_control:
@@ -49,7 +43,7 @@
 
 
 - name: PRINTING RETURN
-  debug: var=result
+  ansible.builtin.debug: var=result
   tags: test_04
 
 
@@ -65,13 +59,13 @@
     force_basic_auth: true
     body_format: json
   register: couchdb_results
-  tags: test_06
+  tags: test_05
 
 
 - name: UPDATE FACT USERS FROM COUCHDB
-  set_fact:
+  ansible.builtin.set_fact:
     users: "{{ couchdb_results.json.docs }}"
-  tags: test_06
+  tags: test_05
 
 
 - name: CALL ME
@@ -83,9 +77,9 @@
   loop_control:
     label: "{{ item.doc.name | default('undefined') }}"
   register: result
-  tags: test_05, test_06
+  tags: test_01, test_05
 
 
 - name: PRINTING RETURN
-  debug: var=result
-  tags: test_05, test_06
+  ansible.builtin.debug: var=result
+  tags: test_01, test_05
