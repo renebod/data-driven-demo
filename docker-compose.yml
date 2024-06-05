@@ -9,7 +9,7 @@ services:
       - couchdb_data:/opt/couchdb/data
     environment:
       - 'COUCHDB_USER=admin'
-      - 'COUCHDB_PASSWORD=secret123'
+      - 'COUCHDB_PASSWORD=password'
 
   jupyter:
     build: ./docker/jupyter

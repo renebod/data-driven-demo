@@ -53,16 +53,39 @@
   tags: test_04
 
 
+- name: FILTER USERS OUT OF COUCHDB
+  ansible.builtin.uri:
+    url: http://couchdb:5984/mydb/_find
+    user: admin
+    password: password
+    method: POST
+    body:
+      selector:
+        doc_type: users
+    force_basic_auth: true
+    body_format: json
+  register: couchdb_results
+  tags: test_06
+
+
+- name: UPDATE FACT USERS FROM COUCHDB
+  set_fact:
+    users: "{{ couchdb_results.json.docs }}"
+  tags: test_06
+
+
 - name: CALL ME
   call_me:
     name: "{{ item.name }}"
     telephone: "{{ item.telephone }}"
     state: "{{ item.state | default('present') }}"
   loop: "{{ users }}"
+  loop_control:
+    label: "{{ item.doc.name | default('undefined') }}"
   register: result
-  tags: test_05
+  tags: test_05, test_06
 
 
 - name: PRINTING RETURN
   debug: var=result
-  tags: test_05
+  tags: test_05, test_06

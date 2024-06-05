@@ -12,7 +12,7 @@ def main():
         )
     )
     msg = "If you need to call " + module.params["name"] + ", please dial: " + module.params["telephone"]
-    module.exit_json(changed=False, msg=msg)
+    module.exit_json(changed=False, meta=msg)
 
 if __name__ == '__main__':
     main()
