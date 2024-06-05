@@ -1,0 +1,36 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: False
+  vars:
+    people:
+    - name: Mike
+      epic: true
+      office: London
+      status:
+        colour: blue
+        ready: true
+    - name: John
+      epic: false
+      office: Paris
+      status:
+        colour: green
+        ready: true
+    - name: Betty
+      epic: true
+      office: Berlin
+      status:
+        colour: red
+        ready: true
+    - name: Allan
+      epic: true
+      office: Amsterdam
+      status:
+        colour: yellow
+        ready: true
+
+  tasks:
+    - name: FIND PEOPLE
+      debug: msg="Yay it's {{ item.name }} from {{ item.office}} and. Status is {{ "ready" if item.status.ready else "not ready" }}"
+      with_items: "{{ people }}"
+      when: item.epic

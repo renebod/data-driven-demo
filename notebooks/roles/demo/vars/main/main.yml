@@ -1,0 +1,10 @@
+---
+users:
+  - alice:
+    name: Alice Appleworth
+    telephone: 123-456-7890
+  - bob:
+    name: Bob Bananarama
+    telephone: 987-654-3210
+
+bla: {a: 1, b: 2, c: 7}

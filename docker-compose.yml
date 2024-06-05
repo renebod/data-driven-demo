@@ -1,0 +1,24 @@
+services:
+
+  couchdb:
+    image: apache/couchdb:3
+    restart: always
+    ports:
+      - 5984:5984
+    volumes:
+      - couchdb_data:/opt/couchdb/data
+    environment:
+      - 'COUCHDB_USER=admin'
+      - 'COUCHDB_PASSWORD=secret123'
+
+  jupyter:
+    build: ./docker/jupyter
+    image: jupyter_ansible
+    command: jupyter notebook --ip=0.0.0.0 --allow-root --no-browser --NotebookApp.password=sha1:58eaa2e688ae:11fd96685b9203d1256a1e09603c9be4f62c94b6
+    volumes:
+      - ./notebooks/:/code
+    ports:
+      - 8888:8888
+
+volumes:
+  couchdb_data:

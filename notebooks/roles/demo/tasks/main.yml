@@ -1,0 +1,68 @@
+---
+- name: SHOW DICTIONARY
+  debug:
+    msg: "DICT LOOKUP: {{ lookup('dict', bla) }}"
+  tags: test_01
+
+
+- name: GET FROM COUCHDB
+  ansible.builtin.uri:
+    url: http://couchdb:5984/mydb/_all_docs
+    user: admin
+    password: password
+    force_basic_auth: true
+    body_format: json
+  register: couchdb_results
+  tags: test_02
+
+
+- name: SHOW DATA DRIVEN OBJECTS
+  debug:
+    var: couchdb_results
+  tags: test_02
+
+
+- name: GET FROM COUCHDB
+  ansible.builtin.uri:
+    url: http://couchdb:5984/mydb/_all_docs?include_docs=true
+    user: admin
+    password: password
+    force_basic_auth: true
+    body_format: json
+  register: couchdb_results
+  tags: test_03
+
+
+- name: SHOW DATA DRIVEN OBJECTS
+  debug:
+    msg: "{{ item.doc }}"
+  loop: "{{ couchdb_results.json.rows }}"
+  loop_control:
+    label: "{{ item.doc.name | default('undefined') }}"
+  tags: test_03
+
+
+- name: DESIGNING A CUSTOM MODULE
+  hello_world:
+  register: result
+  tags: test_04
+
+
+- name: PRINTING RETURN
+  debug: var=result
+  tags: test_04
+
+
+- name: CALL ME
+  call_me:
+    name: "{{ item.name }}"
+    telephone: "{{ item.telephone }}"
+    state: "{{ item.state | default('present') }}"
+  loop: "{{ users }}"
+  register: result
+  tags: test_05
+
+
+- name: PRINTING RETURN
+  debug: var=result
+  tags: test_05

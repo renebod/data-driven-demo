@@ -1,0 +1,9 @@
+---
+# This playbook uses roles for the purpose of the demo.
+
+- name: Ansible Example Playbook
+  hosts: localhost
+  remote_user: root
+
+  roles:
+    - demo
