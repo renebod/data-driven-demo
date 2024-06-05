@@ -15,3 +15,9 @@ http://localhost:8888
 ## The database will be available at:
 
 http://localhost:5984/_utils
+
+
+## Based on the following helpful guides
+
+https://docs.ansible.com/ansible/latest/collections/ansible/builtin/dict_lookup.html
+https://docs.couchdb.org/en/stable/api/database/find.html
