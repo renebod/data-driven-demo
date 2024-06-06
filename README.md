@@ -1,4 +1,4 @@
-# bookstore_api
+# Data Driven Approach
 This is a guided tutorial for Data Driven approach with Ansible.
 
 Start project with the following commands:
