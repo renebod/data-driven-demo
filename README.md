@@ -1,4 +1,4 @@
-# Data Driven Approach
+# Data Driven Demo
 This is a guided tutorial for Data Driven approach with Ansible.
 
 Start project with the following commands:
