@@ -1,50 +1,13 @@
 ---
-- name: GET FROM COUCHDB
-  ansible.builtin.uri:
-    url: http://couchdb:5984/mydb/_all_docs
-    user: admin
-    password: password
-    force_basic_auth: true
-    body_format: json
-  register: couchdb_results
-  tags: test_02
-
-
-- name: SHOW DATA DRIVEN OBJECTS
-  ansible.builtin.debug:
-    var: couchdb_results
-  tags: test_02
-
-
-- name: GET FROM COUCHDB
-  ansible.builtin.uri:
-    url: http://couchdb:5984/mydb/_all_docs?include_docs=true
-    user: admin
-    password: password
-    force_basic_auth: true
-    body_format: json
-  register: couchdb_results
-  tags: test_03
-
-
-- name: SHOW DATA DRIVEN OBJECTS
-  ansible.builtin.debug:
-    msg: "{{ item.doc }}"
-  loop: "{{ couchdb_results.json.rows }}"
-  loop_control:
-    label: "{{ item.doc.name | default('undefined') }}"
-  tags: test_03
-
-
 - name: DESIGNING A CUSTOM MODULE
   hello_world:
   register: result
-  tags: test_04
+  tags: test_01
 
 
 - name: PRINTING RETURN
   ansible.builtin.debug: var=result
-  tags: test_04
+  tags: test_01
 
 
 - name: FILTER USERS OUT OF COUCHDB
@@ -59,13 +22,13 @@
     force_basic_auth: true
     body_format: json
   register: couchdb_results
-  tags: test_05
+  tags: test_03
 
 
 - name: UPDATE FACT USERS FROM COUCHDB
   ansible.builtin.set_fact:
     users: "{{ couchdb_results.json.docs }}"
-  tags: test_05
+  tags: test_03
 
 
 - name: CALL ME
@@ -77,9 +40,9 @@
   loop_control:
     label: "{{ item.doc.name | default('undefined') }}"
   register: result
-  tags: test_01, test_05
+  tags: test_02, test_03
 
 
 - name: PRINTING RETURN
   ansible.builtin.debug: var=result
-  tags: test_01, test_05
+  tags: test_02, test_03
